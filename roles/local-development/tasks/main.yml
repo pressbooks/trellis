@@ -15,10 +15,11 @@
 - name: Enable default themes
   include_tasks: enable-theme.yml
   with_items:
+    - pressbooks-aldine
     - pressbooks-book
-    - pressbooks-publisher
     - pressbooks-clarke
     - pressbooks-donham
+    - pressbooks-jacobs
   loop_control:
     loop_var: theme
 - name: Allow new book registration
