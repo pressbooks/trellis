@@ -12,6 +12,7 @@ apt_packages_custom:
   imagemagick: "{{ apt_package_state }}"
   poppler-utils: "{{ apt_package_state }}"
   python-lxml: "{{ apt_package_state }}"
+  unzip: "{{ apt_package_state }}"
   nano: "{{ apt_package_state }}"
   ccze: "{{ apt_package_state }}"
 ntp_timezone: Etc/UTC
