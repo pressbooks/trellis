@@ -28,7 +28,7 @@ alias cdpb="cd {{ pathToCurrent }}/web/app/plugins/pressbooks"
 alias cdpbt="cd {{ pathToCurrent }}/web/app/themes"
 alias tail-access-log="tail -n1 -f --follow=name --retry {{ pathToLogs }}/access.log | ccze -A"
 alias tail-error-log="tail -n1 -f --follow=name --retry {{ pathToLogs }}/error.log | ccze -A"
-alias install-wp-tests="{{ pathToCurrent }}/web/app/plugins/pressbooks/bin/install-wp-tests.sh pressbooks_tests pressbooks_test '' 127.0.0.1 latest true"
+alias install-wp-tests="{{ pathToCurrent }}/web/app/plugins/pressbooks/bin/install-wp-tests.sh pressbooks_tests pressbooks_test example_dbpassword 127.0.0.1 latest true"
 
 # HH - See: https://github.com/dvorka/hstr
 export HH_CONFIG=hicolor  ### get more colors
