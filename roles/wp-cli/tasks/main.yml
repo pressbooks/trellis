@@ -9,7 +9,6 @@
   get_url:
     url: "{{ wp_cli_phar_url }}"
     dest: /tmp/wp-cli-{{ wp_cli_version }}.phar
-    checksum: "{{ wp_cli_phar_checksum }}"
 
 - name: Download WP-CLI Phar Signature
   get_url:
