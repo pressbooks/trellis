@@ -11,10 +11,13 @@ apt_packages_custom:
   ghostscript: "{{ apt_package_state }}"
   imagemagick: "{{ apt_package_state }}"
   poppler-utils: "{{ apt_package_state }}"
-  python-lxml: "{{ apt_package_state }}"
+  python3-lxml: "{{ apt_package_state }}"
   unzip: "{{ apt_package_state }}"
   nano: "{{ apt_package_state }}"
   ccze: "{{ apt_package_state }}"
+wp_cli_packages:
+  - aaemnnosttv/wp-cli-login-command
+  - runcommand/find-unused-themes
 ntp_timezone: Etc/UTC
 ntp_manage_config: true
 www_root: /srv/www
@@ -30,4 +33,5 @@ raw_vars:
   - vault_mysql_root_password
   - vault_users.*.password
   - vault_users.*.salt
+  - vault_wordpress_env_defaults
   - vault_wordpress_sites

@@ -8,11 +8,11 @@
 
 - name: logrotate
   src: nickhammond.logrotate
-  version: e7a498d
+  version: v0.0.5
 
 - name: swapfile
-  src: kamaln7.swapfile
-  version: 4850d8a
+  src: oefenweb.swapfile
+  version: v2.0.6
 
 - name: mailhog
   src: geerlingguy.mailhog
@@ -20,7 +20,7 @@
 
 - name: princexml
   src: pressbooks.princexml
-  version: 11.3
+  version: 11.4.0
 
 - name: kindlegen
   src: softasap.sa-publishing-kindlegen
