@@ -5,6 +5,20 @@
   with_dict: "{{ wordpress_sites }}"
   become: true
   become_user: "{{ web_user }}"
+- name: Network activate Redis Cache
+  command: wp plugin activate redis-cache --network
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
+  with_dict: "{{ wordpress_sites }}"
+  become: true
+  become_user: "{{ web_user }}"
+- name: Install Redis object cache drop-in and enable Redis object cache
+  command: wp redis update-dropin
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
+  with_dict: "{{ wordpress_sites }}"
+  become: true
+  become_user: "{{ web_user }}"
 - name: List themes
   command: wp theme list
   args:
