@@ -21,6 +21,7 @@
     - { role: mailhog, tags: [mailhog, mail] }
     - { role: php, tags: [php] }
     - { role: xdebug, tags: [php, xdebug] }
+    - { role: redis, tags: [redis] }
     - { role: memcached, tags: [memcached] }
     - { role: nginx, tags: [nginx] }
     - { role: logrotate, tags: [logrotate] }
