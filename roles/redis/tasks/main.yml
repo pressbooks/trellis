@@ -1,0 +1,36 @@
+
+- name: Increase net.core.somaxconn
+  sysctl:
+    name: net.core.somaxconn
+    value: "{{ somaxconn }}"
+  notify: restart redis
+
+- name: Enable vm.overcommit_memory
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+  notify: restart redis
+
+- name: Install Disable Transparent Huge Pages (THP) service
+  copy:
+    src: "disable-transparent-huge-pages.service"
+    dest: "/etc/systemd/system/disable-transparent-huge-pages.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  register: disable_thp_service_added
+
+- name: Load Disable THP service into systemd
+  command: "/bin/systemctl daemon-reload"
+  when: disable_thp_service_added | changed
+
+- name: Enable and start Disable THP service
+  service:
+    name: "disable-transparent-huge-pages"
+    enabled: True
+    state: "started"
+  notify: restart redis
+
+- name: Run geerlingguy.redis
+  import_role:
+    name: geerlingguy.redis
