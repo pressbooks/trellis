@@ -12,8 +12,8 @@
   with_dict: "{{ wordpress_sites }}"
   become: true
   become_user: "{{ web_user }}"
-- name: Install Redis object cache drop-in and enable Redis object cache
-  command: wp redis update-dropin
+- name: Enable Redis object cache
+  command: wp redis enable
   args:
     chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
   with_dict: "{{ wordpress_sites }}"
