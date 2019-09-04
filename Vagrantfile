@@ -116,7 +116,7 @@ Vagrant.configure('2') do |config|
 
   provisioner = local_provisioning? ? :ansible_local : :ansible
   provisioning_path = local_provisioning? ? ANSIBLE_PATH_ON_VM : ANSIBLE_PATH
-    
+
   if local_provisioning?
     # Install libssl for Ansible (https://github.com/hashicorp/vagrant/issues/10914)
     config.vm.provision "shell",
@@ -144,7 +144,6 @@ Vagrant.configure('2') do |config|
       end
       ansible.provisioning_path = provisioning_path
       ansible.version = vconfig.fetch('vagrant_ansible_version')
-      ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/get-pip.py | sudo python"
     end
 
     ansible.compatibility_mode = '2.0'
