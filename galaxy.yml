@@ -1,6 +1,6 @@
 - name: composer
   src: geerlingguy.composer
-  version: 1.7.0
+  version: 1.7.6
 
 - name: ntp
   src: geerlingguy.ntp
@@ -12,7 +12,7 @@
 
 - name: swapfile
   src: oefenweb.swapfile
-  version: v2.0.6
+  version: v2.0.22
 
 - name: mailhog
   src: geerlingguy.mailhog
@@ -27,4 +27,4 @@
   version: 0f31e09
 
 - src: geerlingguy.redis
-  version: 1.5.1
+  version: 1.6.0
