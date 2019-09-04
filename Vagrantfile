@@ -125,9 +125,23 @@ Vagrant.configure('2') do |config|
       "sudo -E apt-get -q --option \"Dpkg::Options::=--force-confold\" --assume-yes install libssl1.1"
   end
 
+  # Fix for https://github.com/hashicorp/vagrant/issues/10914
+  if local_provisioning?
+    config.vm.provision 'shell', inline: <<~SHELL
+      sudo apt-get update -y -qq &&
+      sudo dpkg-reconfigure libc6 &&
+      export DEBIAN_FRONTEND=noninteractive &&
+      sudo -E apt-get -q --option \"Dpkg::Options::=--force-confold\" --assume-yes install libssl1.1
+    SHELL
+  end
+
   config.vm.provision provisioner do |ansible|
     if local_provisioning?
       ansible.install_mode = 'pip'
+      if Vagrant::VERSION >= '2.2.4'
+        # Fix for https://github.com/hashicorp/vagrant/issues/10950
+        ansible.pip_install_cmd = 'curl https://bootstrap.pypa.io/get-pip.py | sudo python'
+      end
       ansible.provisioning_path = provisioning_path
       ansible.version = vconfig.fetch('vagrant_ansible_version')
       ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/get-pip.py | sudo python"
