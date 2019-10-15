@@ -24,7 +24,7 @@
 
 - name: kindlegen
   src: softasap.sa-publishing-kindlegen
-  version: 0f31e09
+  version: 1.1.0
 
 - src: geerlingguy.redis
   version: 1.6.0
