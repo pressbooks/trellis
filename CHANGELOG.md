@@ -1,4 +1,14 @@
-### HEAD
+### 1.3.0: December 7th, 2019
+* Add `git_sha` and `release_version` to `.env` on deploy ([#1124](https://github.com/roots/trellis/pull/1124))
+* Lower self-signed certificate expiry time for macOS Cataline support ([#1120](https://github.com/roots/trellis/pull/1120))
+* Block dependency manager files in Nginx ([#1116](https://github.com/roots/trellis/pull/1116))
+
+### 1.2.0: October 11th, 2019
+* Lets Encrypt ACME v2 support ([#1114](https://github.com/roots/trellis/pull/1114))
+* Fix self-signed certificates in Ansible 2.8 ([#1110](https://github.com/roots/trellis/pull/1110))
+* Update WP CLI to v2.3.0 ([#1109](https://github.com/roots/trellis/pull/1109))
+* Ansible 2.8.x support ([#1103](https://github.com/roots/trellis/pull/1103))
+* Bump galaxy dependency versions ([#1105](https://github.com/roots/trellis/pull/1105))
 * Fix issues with Vagrant ansible_local provisioner ([#1104](https://github.com/roots/trellis/pull/1104))
 * Bump ansible requirement to 2.7.12([#1102](https://github.com/roots/trellis/pull/1102))
 
