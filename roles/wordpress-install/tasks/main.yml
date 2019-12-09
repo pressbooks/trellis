@@ -32,23 +32,6 @@
   no_log: true
   with_dict: "{{ wordpress_sites }}"
 
-- name: Add known_hosts
-  known_hosts:
-    name: "{{ item.name }}"
-    key: "{{ item.key | default(omit) }}"
-    path: "{{ item.path | default('/home/' + ansible_user + '/.ssh/known_hosts') }}"
-    state: "{{ item.state | default('present') }}"
-  with_items: "{{ known_hosts | default([]) }}"
-
-- name: Setup packagist.com authentication
-  composer:
-    command: config
-    arguments: --auth http-basic.repo.packagist.com token {{ item.value.packagist_token }}
-    working_dir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
-  no_log: true
-  when: item.value.packagist_token is defined
-  with_dict: "{{ wordpress_sites }}"
-
 - name: Install Dependencies with Composer
   composer:
     no_dev: no
@@ -59,18 +42,18 @@
 
 - name: Install WP
   command: wp core {{ item.value.multisite.enabled | default(false) | ternary('multisite-install', 'install') }}
-           --allow-root
-           --url="{{ site_env.wp_home }}"
-           {% if item.value.multisite.enabled | default(false) %}
-           --base="{{ item.value.multisite.base_path | default('/') }}"
-           {% if item.value.multisite.subdomains | default('false') %}
-           --subdomains
-           {% endif %}
-           {% endif %}
-           --title="{{ item.value.site_title | default(item.key) }}"
-           --admin_user="{{ item.value.admin_user | default('admin') }}"
-           --admin_password="{{ vault_wordpress_sites[item.key].admin_password }}"
-           --admin_email="{{ item.value.admin_email }}"
+    --allow-root
+    --url="{{ site_env.wp_home }}"
+    {% if item.value.multisite.enabled | default(false) %}
+    --base="{{ item.value.multisite.base_path | default('/') }}"
+    {% if item.value.multisite.subdomains | default('false') %}
+    --subdomains
+    {% endif %}
+    {% endif %}
+    --title="{{ item.value.site_title | default(item.key) }}"
+    --admin_user="{{ item.value.admin_user | default('admin') }}"
+    --admin_password="{{ vault_wordpress_sites[item.key].admin_password }}"
+    --admin_email="{{ item.value.admin_email }}"
   args:
     chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
   register: wp_install
