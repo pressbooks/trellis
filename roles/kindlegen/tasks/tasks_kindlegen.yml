@@ -1,0 +1,46 @@
+---
+  - name: KindleGEN | Test if is present
+    command: test -x /usr/bin/kindlegen
+    ignore_errors: yes
+    register: kindlegen_present
+    changed_when: False
+    tags:
+      - kindlegen
+
+  - name: KindleGen | download package
+    copy:
+      src: "kindlegen.tar.gz"
+      dest: "/tmp/kindlegen.tar.gz"
+      owner: root
+      group: root
+      mode: '0644'
+    when: kindlegen_present is failed
+    tags:
+      -kindlegen
+
+  - name: KindleGen | Create installation directory
+    file: path="{{ kindlegen_dir|default('/opt/kindlegen') }}" owner="root" state="directory"
+    become: yes
+    when: kindlegen_present is failed
+    tags:
+      - kindlegen
+
+  - name: KindleGen | Unarchive installation
+    unarchive:  src="/tmp/kindlegen.tar.gz"  dest="{{ kindlegen_dir|default('/opt/kindlegen') }}" remote_src=True
+    become: yes
+    when: kindlegen_present is failed
+    tags:
+      - kindlegen
+
+  - name: KindleGen | Link executable
+    file:
+      src: "{{ kindlegen_dir|default('/opt/kindlegen') }}/kindlegen"
+      dest: "/usr/local/sbin/kindlegen"
+      owner: "root"
+      state: link
+    become: yes
+    when: kindlegen_present is failed
+    tags:
+      - kindlegen
+
+
