@@ -26,7 +26,12 @@
       - kindlegen
 
   - name: KindleGen | Unarchive installation
-    unarchive:  src="/tmp/kindlegen.tar.gz"  dest="{{ kindlegen_dir|default('/opt/kindlegen') }}" remote_src=True
+    unarchive:
+      src: /tmp/kindlegen.tar.gz
+      dest: "{{ kindlegen_dir|default('/opt/kindlegen') }}"
+      extra_opts:
+        - --strip-components=1
+      remote_src: True
     become: yes
     when: kindlegen_present is failed
     tags:
