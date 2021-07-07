@@ -35,3 +35,4 @@
     - { role: wordpress-install, tags: [wordpress, wordpress-install] }
     - { role: local-development, tags: [local-development] }
     - { role: bash-for-pressbooks-dev, tags: [local-development, bash] }
+    - { role: acceptance-test, tags: [acceptance-test] }

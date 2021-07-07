@@ -1,0 +1,54 @@
+---
+- name: Create databases for sites
+  mysql_db:
+    name: "tests"
+    state: present
+    login_host: "localhost"
+    login_user: "root"
+    login_password: "devpw"
+
+- name: Create/assign database root user to db and grant permissions
+  mysql_user:
+    name: "root"
+    password: "devpw"
+    host: "localhost"
+    append_privs: yes
+    priv: "tests.*:ALL"
+    state: present
+    login_host: "localhost"
+    login_user: "root"
+    login_password: "devpw"
+
+- name: Create/assign database pressbooks_test user to db and grant permissions
+  mysql_user:
+    name: "pressbooks_test"
+    password: "example_dbpassword"
+    host: "localhost"
+    append_privs: yes
+    priv: "tests.*:ALL"
+    state: present
+    login_host: "localhost"
+    login_user: "root"
+    login_password: "devpw"
+
+- name: Add Chrome deb to target
+  copy:
+    src: "google-chrome-stable_current_amd64.deb"
+    dest: "/tmp/google-chrome-stable_current_amd64.deb"
+
+- name: Install a Google Chrome .deb package
+  apt:
+    deb: "/tmp/google-chrome-stable_current_amd64.deb"
+
+- name: Check that the chromedriver exists
+  stat:
+    path: /usr/bin/chromedriver
+  register: chromedriver_present
+
+- name: Add chromedriver
+  copy:
+    src: "chromedriver"
+    dest: "/usr/bin/chromedriver"
+    owner: root
+    group: root
+    mode: '0777'
