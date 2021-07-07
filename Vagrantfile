@@ -19,7 +19,6 @@ trellis_config = Trellis::Config.new(root_path: ANSIBLE_PATH)
 Vagrant.require_version '>= 2.1.0'
 
 Vagrant.configure('2') do |config|
-  config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.box = vconfig.fetch('vagrant_box')
   config.vm.box_version = vconfig.fetch('vagrant_box_version')
   config.ssh.forward_agent = true
