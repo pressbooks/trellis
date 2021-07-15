@@ -1,3 +1,0 @@
----
-# tasks file for sa-publishing-kindlegen
-  - include_tasks: tasks_kindlegen.yml
