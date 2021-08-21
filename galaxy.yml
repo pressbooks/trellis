@@ -1,10 +1,10 @@
 - name: composer
   src: geerlingguy.composer
-  version: 1.7.6
+  version: 1.9.0
 
 - name: ntp
   src: geerlingguy.ntp
-  version: 1.6.4
+  version: 2.3.0
 
 - name: logrotate
   src: nickhammond.logrotate
@@ -16,11 +16,11 @@
 
 - name: mailhog
   src: geerlingguy.mailhog
-  version: 2.1.4
+  version: 2.2.0
 
 - name: princexml
   src: pressbooks.princexml
   version: 12.5.0
 
 - src: geerlingguy.redis
-  version: 1.6.0
+  version: 1.7.0

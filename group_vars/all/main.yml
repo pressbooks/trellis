@@ -1,8 +1,6 @@
 composer_keep_updated: true
-composer_version: "1.10.20"
 composer_version_branch: ''
-composer_global_packages:
- - { name: hirak/prestissimo }
+php_version: "7.4"
 apt_cache_valid_time: 3600
 apt_package_state: present
 apt_security_package_state: latest
