@@ -4,7 +4,7 @@
 
 - name: ntp
   src: geerlingguy.ntp
-  version: 2.3.0
+  version: 2.2.0
 
 - name: logrotate
   src: nickhammond.logrotate
@@ -12,15 +12,8 @@
 
 - name: swapfile
   src: oefenweb.swapfile
-  version: v2.0.22
+  version: v2.0.32
 
 - name: mailhog
   src: geerlingguy.mailhog
   version: 2.2.0
-
-- name: princexml
-  src: pressbooks.princexml
-  version: 12.5.0
-
-- src: geerlingguy.redis
-  version: 1.7.0
