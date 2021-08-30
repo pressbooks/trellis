@@ -17,3 +17,10 @@
 - name: mailhog
   src: geerlingguy.mailhog
   version: 2.2.0
+
+- name: princexml
+  src: pressbooks.princexml
+  version: 12.5.0
+
+- src: geerlingguy.redis
+  version: 1.7.0
