@@ -1,10 +1,10 @@
-- name: Add hh PPA
+- name: Add hstr PPA
   apt_repository:
     repo: "ppa:ultradvorka/ppa"
     update_cache: yes
-- name: Install hh
+- name: Install hstr
   apt:
-    name: hh
+    name: hstr
     state: present
 - name: Checkout git aware prompt
   become_user: vagrant
