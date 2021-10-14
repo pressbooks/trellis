@@ -73,7 +73,7 @@
       memcached_packages: "{{ memcached_packages }}"
       php_extensions: "{{ php_extensions }}"
       sshd_packages: "{{ sshd_packages }}"
-    package_vars_wrong_format: "[{% for k,v in package_vars.iteritems() if v | type_debug != 'dict' %}'{{ k }}',{% endfor %}]"
+    package_vars_wrong_format: "[{% for k,v in package_vars.items() if v | type_debug != 'dict' %}'{{ k }}',{% endfor %}]"
   tags: [sshd, memcached, php]
 
 - name: Validate Ubuntu version
