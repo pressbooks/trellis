@@ -9,7 +9,7 @@
 - name: Checkout git aware prompt
   become_user: vagrant
   git:
-    repo: git://github.com/jimeh/git-aware-prompt.git
+    repo: https://github.com/jimeh/git-aware-prompt.git
     dest: ~/.bash/git-aware-prompt
 - name: Create .bash_aliases file
   with_dict: "{{ wordpress_sites }}"
