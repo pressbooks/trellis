@@ -2,10 +2,14 @@
   apt_repository:
     repo: "ppa:ultradvorka/ppa"
     update_cache: yes
+  when: ansible_architecture == "x86_64"
+
 - name: Install hstr
   apt:
     name: hstr
     state: present
+  when: ansible_architecture == "x86_64"
+
 - name: Checkout git aware prompt
   become_user: vagrant
   git:
