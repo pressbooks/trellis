@@ -11,6 +11,7 @@ php_extensions_default:
   php7.4-mbstring: "{{ apt_package_state }}"
   php7.4-mysql: "{{ apt_package_state }}"
   php7.4-opcache: "{{ apt_package_state }}"
+  php7.4-redis: "{{ apt_package_state }}"
   php7.4-xml: "{{ apt_package_state }}"
   php7.4-xmlrpc: "{{ apt_package_state }}"
   php7.4-zip: "{{ apt_package_state }}"
