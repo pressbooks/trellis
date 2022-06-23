@@ -1,0 +1,35 @@
+---
+- name: 'Check for supported environment'
+  fail: msg="PrinceXML can only be installed on Ubuntu Xenial, Bionic or Focal."
+  when: (ansible_distribution|string != 'Ubuntu') or
+        (ansible_distribution_release|string != 'xenial' and ansible_distribution_release|string != 'bionic' and ansible_distribution_release|string != 'focal')
+
+- name: Determine PrinceXML version
+  set_fact:
+    prince_package_uri: "prince_package_uri_ubuntu_{{ ansible_distribution_release|string }}"
+
+- name: Install PrinceXML
+  apt:
+    deb: "{{ lookup('vars', prince_package_uri) }}"
+
+- name: Upload PrinceXML license
+  copy:
+    src: "{{ prince_license }}"
+    dest: /usr/lib/prince/license/license.dat.new
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  when: prince_license != ""
+
+- name: Check for existing PrinceXML license
+  stat: path=/usr/lib/prince/license/license.dat
+  register: existing_license
+  when: prince_license != ""
+
+- name: Backup old PrinceXML license
+  command: mv /usr/lib/prince/license/license.dat /usr/lib/prince/license/license.dat.{{ lookup('pipe', 'date +%Y%m%d') }}.old
+  when: prince_license != "" and existing_license.stat.exists
+
+- name: Install new PrinceXML license
+  command: mv /usr/lib/prince/license/license.dat.new /usr/lib/prince/license/license.dat
+  when: prince_license != ""

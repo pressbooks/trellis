@@ -16,7 +16,11 @@ ensure_plugins(vconfig.fetch('vagrant_plugins')) if vconfig.fetch('vagrant_insta
 
 trellis_config = Trellis::Config.new(root_path: ANSIBLE_PATH)
 
-Vagrant.require_version '>= 2.1.0'
+if Vagrant::Util::Platform.darwin?
+  Vagrant.require_version '>= 2.1.0', '< 2.2.19'
+else
+  Vagrant.require_version '>= 2.1.0'
+end
 
 Vagrant.configure('2') do |config|
   config.vm.box = vconfig.fetch('vagrant_box')
@@ -64,14 +68,12 @@ Vagrant.configure('2') do |config|
     fail_with_message "vagrant-hostmanager missing, please install the plugin with this command:\nvagrant plugin install vagrant-hostmanager\n\nOr install landrush for multisite subdomains:\nvagrant plugin install landrush"
   end
 
-  bin_path = File.join(ANSIBLE_PATH_ON_VM, 'bin')
-
   vagrant_mount_type = vconfig.fetch('vagrant_mount_type')
 
   extra_options = if vagrant_mount_type == 'smb'
     {
-      smb_username: vconfig.fetch('vagrant_smb_username', 'vagrant'),
-      smb_password: vconfig.fetch('vagrant_smb_password', 'vagrant'),
+      smb_username: vconfig.fetch('vagrant_smb_username', nil),
+      smb_password: vconfig.fetch('vagrant_smb_password', nil),
     }
   else
     {}
@@ -84,7 +86,6 @@ Vagrant.configure('2') do |config|
     end
 
     config.vm.synced_folder ANSIBLE_PATH, ANSIBLE_PATH_ON_VM, mount_options: mount_options(vagrant_mount_type, dmode: 755, fmode: 644), type: vagrant_mount_type, **extra_options
-    config.vm.synced_folder File.join(ANSIBLE_PATH, 'bin'), bin_path, mount_options: mount_options(vagrant_mount_type, dmode: 755, fmode: 755), type: vagrant_mount_type, **extra_options
   elsif !Vagrant.has_plugin?('vagrant-bindfs')
     fail_with_message "vagrant-bindfs missing, please install the plugin with this command:\nvagrant plugin install vagrant-bindfs"
   else
@@ -95,7 +96,6 @@ Vagrant.configure('2') do |config|
 
     config.vm.synced_folder ANSIBLE_PATH, '/ansible-nfs', type: 'nfs'
     config.bindfs.bind_folder '/ansible-nfs', ANSIBLE_PATH_ON_VM, o: 'nonempty', p: '0644,a+D'
-    config.bindfs.bind_folder bin_path, bin_path, perms: '0755'
   end
 
   vconfig.fetch('vagrant_synced_folders', []).each do |folder|
@@ -117,23 +117,10 @@ Vagrant.configure('2') do |config|
   provisioner = local_provisioning? ? :ansible_local : :ansible
   provisioning_path = local_provisioning? ? ANSIBLE_PATH_ON_VM : ANSIBLE_PATH
 
-  # Fix for https://github.com/hashicorp/vagrant/issues/10914
-  if local_provisioning?
-    config.vm.provision 'shell', inline: <<~SHELL
-      sudo apt-get update -y -qq &&
-      sudo dpkg-reconfigure libc6 &&
-      export DEBIAN_FRONTEND=noninteractive &&
-      sudo -E apt-get -q --option \"Dpkg::Options::=--force-confold\" --assume-yes install libssl1.1
-    SHELL
-  end
-
   config.vm.provision provisioner do |ansible|
     if local_provisioning?
       ansible.install_mode = 'pip'
-      if Vagrant::VERSION >= '2.2.5'
-        # Fix for https://github.com/hashicorp/vagrant/issues/10950
-        ansible.pip_install_cmd = 'curl https://bootstrap.pypa.io/get-pip.py | sudo python'
-      end
+      ansible.pip_install_cmd = 'sudo apt-get install -y -qq python3-pip'
       ansible.provisioning_path = provisioning_path
       ansible.version = vconfig.fetch('vagrant_ansible_version')
     end
@@ -142,6 +129,10 @@ Vagrant.configure('2') do |config|
     ansible.playbook = File.join(provisioning_path, 'dev.yml')
     ansible.galaxy_role_file = File.join(provisioning_path, 'galaxy.yml') unless vconfig.fetch('vagrant_skip_galaxy') || ENV['SKIP_GALAXY']
     ansible.galaxy_roles_path = File.join(provisioning_path, 'vendor/roles')
+
+    if which('trellis')
+      ansible.galaxy_command = 'trellis galaxy install'
+    end
 
     ansible.groups = {
       'web' => ['default'],

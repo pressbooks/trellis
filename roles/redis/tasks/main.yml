@@ -22,7 +22,7 @@
 
 - name: Load Disable THP service into systemd
   command: "/bin/systemctl daemon-reload"
-  when: disable_thp_service_added | changed
+  when: disable_thp_service_added.changed
 
 - name: Enable and start Disable THP service
   service:

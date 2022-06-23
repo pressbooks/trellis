@@ -1,15 +1,19 @@
-- name: Add hh PPA
+- name: Add hstr PPA
   apt_repository:
     repo: "ppa:ultradvorka/ppa"
     update_cache: yes
-- name: Install hh
+  when: ansible_architecture == "x86_64"
+
+- name: Install hstr
   apt:
-    name: hh
+    name: hstr
     state: present
+  when: ansible_architecture == "x86_64"
+
 - name: Checkout git aware prompt
   become_user: vagrant
   git:
-    repo: git://github.com/jimeh/git-aware-prompt.git
+    repo: https://github.com/jimeh/git-aware-prompt.git
     dest: ~/.bash/git-aware-prompt
 - name: Create .bash_aliases file
   with_dict: "{{ wordpress_sites }}"

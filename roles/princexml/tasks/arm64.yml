@@ -1,0 +1,3 @@
+---
+- name: 'Skip PrinceXML for now until there is an arm .deb'
+  action: command echo "Arm detected. Skipping PrinceXML"

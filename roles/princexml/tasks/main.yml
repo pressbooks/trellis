@@ -1,0 +1,9 @@
+---
+  - name: AMD64/x86_64 
+    import_tasks: amd64.yml
+    when: ansible_architecture == "x86_64"
+
+  - name: ARM64 
+    import_tasks: arm64.yml
+    when: ansible_architecture == "aarch64"
+

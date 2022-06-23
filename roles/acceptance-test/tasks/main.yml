@@ -31,24 +31,18 @@
     login_user: "root"
     login_password: "devpw"
 
-- name: Add Chrome deb to target
-  copy:
-    src: "google-chrome-stable_current_amd64.deb"
-    dest: "/tmp/google-chrome-stable_current_amd64.deb"
-
-- name: Install a Google Chrome .deb package
+- name: Install Chromium
   apt:
-    deb: "/tmp/google-chrome-stable_current_amd64.deb"
+    name: chromium-browser
+    state: present
+
+- name: Install Chromium Chrome Driver
+  apt:
+    name: chromium-chromedriver
+    state: present
 
 - name: Check that the chromedriver exists
   stat:
     path: /usr/bin/chromedriver
   register: chromedriver_present
 
-- name: Add chromedriver
-  copy:
-    src: "chromedriver"
-    dest: "/usr/bin/chromedriver"
-    owner: root
-    group: root
-    mode: '0777'

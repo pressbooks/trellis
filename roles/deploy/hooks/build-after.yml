@@ -20,12 +20,13 @@
     - composer_authentication.hostname is defined and composer_authentication.hostname != ""
     - composer_authentication.username is defined and composer_authentication.username != ""
     - composer_authentication.password is defined and composer_authentication.password != ""
-  loop: "{{ composer_authentications }}"
+  loop: "{{ composer_authentications | default([]) }}"
   loop_control:
     loop_var: composer_authentication
     label: "{{ composer_authentication.hostname }}"
 
 - name: Install Composer dependencies
   composer:
-    no_scripts: yes
+    no_scripts: "{{ composer_no_scripts }}"
+    classmap_authoritative: "{{ composer_classmap_authoritative }}"
     working_dir: "{{ deploy_helper.new_release_path }}"

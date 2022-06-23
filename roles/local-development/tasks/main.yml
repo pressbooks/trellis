@@ -77,7 +77,7 @@
     login_password: "{{ mysql_root_password }}"
   with_dict: "{{ wordpress_sites }}"
 - name: Install WP-CLI login helper
-  command: wp login install --activate
+  command: wp login install --activate --yes
   args:
     chdir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
   with_dict: "{{ wordpress_sites }}"
