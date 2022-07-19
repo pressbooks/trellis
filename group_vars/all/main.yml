@@ -3,7 +3,7 @@ apt_package_state: present
 apt_security_package_state: latest
 apt_dev_package_state: latest
 composer_keep_updated: true
-php_version: "7.4"
+php_version: "8.0"
 apt_packages_custom:
   libxml2-utils: "{{ apt_package_state }}"
   default-jdk: "{{ apt_package_state }}"
@@ -22,6 +22,7 @@ ntp_manage_config: true
 www_root: /srv/www
 ip_whitelist:
   - "{{ (env == 'development') | ternary(ansible_default_ipv4.gateway, ipify_public_ip | default('')) }}"
+max_journal_size: 512M
 
 # Values of raw_vars will be wrapped in `{% raw %}` to avoid templating problems if values include `{%` and `{{`.
 # Will recurse dicts/lists. `*` is wildcard for one or more dict keys, list indices, or strings. Example:
