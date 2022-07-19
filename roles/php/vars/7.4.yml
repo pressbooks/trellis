@@ -17,7 +17,4 @@ php_extensions_default:
   php7.4-xmlrpc: "{{ apt_package_state }}"
   php7.4-zip: "{{ apt_package_state }}"
 
-php_memcached_packages:
-  php7.4-memcached: "{{ apt_package_state }}"
-
 php_xdebug_package: php7.4-xdebug
