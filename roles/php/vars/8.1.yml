@@ -1,3 +1,8 @@
+php_extensions_custom: 
+  php8.1-common: "{{ apt_package_state }}"
+  php8.1-gd: "{{ apt_package_state }}"
+  php8.1-redis: "{{ apt_package_state }}"
+
 php_extensions_default:
   php8.1-bcmath: "{{ apt_package_state }}"
   php8.1-cli: "{{ apt_package_state }}"
