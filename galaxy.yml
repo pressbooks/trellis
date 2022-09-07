@@ -20,6 +20,5 @@ roles:
     src: geerlingguy.mailhog
     version: 2.3.0
 
-  - name: redis
-    src: geerlingguy.redis
+  - src: geerlingguy.redis
     version: 1.7.0
