@@ -6,7 +6,6 @@ composer_keep_updated: true
 php_version: "7.4"
 apt_packages_custom:
   libxml2-utils: "{{ apt_package_state }}"
-  default-jdk: "{{ apt_package_state }}"
   ghostscript: "{{ apt_package_state }}"
   imagemagick: "{{ apt_package_state }}"
   poppler-utils: "{{ apt_package_state }}"

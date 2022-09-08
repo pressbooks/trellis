@@ -18,3 +18,4 @@ wordpress_sites:
       provider: self-signed
     cache:
       enabled: false
+    packagist_token: f947401ab0026b030d013d14fd5a2fe686dd6f53c8a5ef008e3d694ccda5
