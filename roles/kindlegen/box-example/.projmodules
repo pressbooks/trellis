@@ -1,3 +1,0 @@
-[submodule "roles/sa-publishing-kindlegen"]
-        path = roles/sa-publishing-kindlegen
-        url = https://github.com/softasap/sa-publishing-kindlegen.git

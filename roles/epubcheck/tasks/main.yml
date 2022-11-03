@@ -2,3 +2,15 @@
   apt:
     name: epubcheck
     state: present
+
+- name: Create directory for EbubCheck 
+  file:
+    path: /opt/epubcheck
+    state: directory
+    mode: '0755'
+
+- name: Create symlink for EpubCheck 
+  file:
+    src: "/usr/share/java/epubcheck.jar"
+    dest: "/opt/epubcheck/epubcheck.jar"
+    state: link
