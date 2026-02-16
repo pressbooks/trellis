@@ -1,3 +1,4 @@
+<h2>This method of installing Pressbooks on your own server is no longer actively being maintained or supported by the Pressbooks team. New instructions will be posted to our community forum in https://pressbooks.community/c/hosting/15 when they have been created.</h2>
 <p align="center">
   <a href="https://roots.io/trellis/">
     <img alt="Trellis" src="https://cdn.roots.io/app/uploads/logo-trellis.svg" height="100">
